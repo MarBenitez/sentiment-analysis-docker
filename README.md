@@ -114,4 +114,4 @@ Feel free to reach out if you have any questions or want to connect:
 
 - **Email:** mar27benitez@gmail.com
 - **LinkedIn:** [Mar Benitez](https://www.linkedin.com/in/mar-benitez-506910192/)
-- **GitHub:** [Your GitHub](https://github.com/MarBenitez/)
+- **GitHub:** [Mar Benitez](https://github.com/MarBenitez/)
