@@ -2,7 +2,7 @@
 
 This project is a sentiment analysis web application powered by Flask and Hugging Face's Transformers library. It allows users to submit text and recieve an analysis indicating whether the sentiment is positive or negative. The project is containerized using Docker, making it easy to deploy and scale in production environments.
 
-![App Screenshot](C:\Users\mar27\OneDrive\Documentos\GitHub\sentiment-analysis-docker\screeshot-app.png)
+![App Screenshot](https://github.com/MarBenitez/sentiment-analysis-docker/blob/main/screeshot-app.png)
 
 ## Table of Contents
 
@@ -114,4 +114,4 @@ Feel free to reach out if you have any questions or want to connect:
 
 - **Email:** mar27benitez@gmail.com
 - **LinkedIn:** [Mar Benitez](https://www.linkedin.com/in/mar-benitez-506910192/)
-- **GitHub:** [Your GitHub](https://github.com/MarBenitez/)
+- **GitHub:** [Mar Benitez](https://github.com/MarBenitez/)
