@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    environment:
+      - FLASK_ENV=development
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
