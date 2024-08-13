@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Sentiment Analysis API</h1>
+    </header>
+    <div class="container">
+        <h2>Submit your text for sentiment analysis:</h2>
+        <form id="sentiment-form">
+            <textarea id="text-input" rows="4" placeholder="Enter your text here..."></textarea>
+            <button type="submit">Analyze</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <footer>
+        <p>Powered by Hugging Face Transformers, Flask and Docker</p>
+        <div class="icons">
+            <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face Logo" class="hf-logo">
+            <img src="https://www.vectorlogo.zone/logos/pocoo_flask/pocoo_flask-icon.svg" alt="Flask Logo" class="flask-logo">
+            <img src="https://www.vectorlogo.zone/logos/docker/docker-icon.svg" alt="Docker Logo" class="docker-logo">
+        </div>
+    </footer>
+    
+    <!-- JavaScript code -->
+    <script>
+        document.getElementById('sentiment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var text = document.getElementById('text-input').value;
+            fetch('/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({text: text})
+            })
+            .then(response => response.json())
+            .then(data => {
+                var resultDiv = document.getElementById('result');
+                if (data.error) {
+                    resultDiv.innerHTML = `<p>Error: ${data.error}</p>`;
+                } else {
+                    resultDiv.innerHTML = `<p>Sentiment: ${data.label}</p>`;
+                    if (data.label.toLowerCase() === 'negative') {
+                        resultDiv.style.backgroundColor = '#ffcccc'; // Rojo claro para negativo
+                    } else if (data.label.toLowerCase() === 'positive') {
+                        resultDiv.style.backgroundColor = '#ccffcc'; // Verde claro para positivo
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+    
+    <!-- JavaScript code ending -->
+</body>
+</html>
