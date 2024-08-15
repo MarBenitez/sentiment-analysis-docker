@@ -54,7 +54,7 @@ Make sure you have the following installed:
 
    ```bash
    git clone https://github.com/MarBenitez/sentiment-analysis-docker
-   cd sentiment-analysis-api
+   cd sentiment-analysis-docker
    ```
 
 2. **Build the Docker image:**
