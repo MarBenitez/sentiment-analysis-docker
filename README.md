@@ -53,7 +53,7 @@ Make sure you have the following installed:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/sentiment-analysis-api.git
+   git clone https://github.com/MarBenitez/sentiment-analysis-docker
    cd sentiment-analysis-api
    ```
 
