@@ -33,10 +33,10 @@ def analyze_user():
         return jsonify({"error": "No username provided"}), 400
     
     tweets = analyze_user_tweets(username, tweet_count)
-    if tweets is not None:
-        return jsonify({"tweets": tweets}), 200
+    if "error" in tweets:
+        return jsonify({"error": tweets["error"]}), 500
     else:
-        return jsonify({"error": "Failed to analyze user tweets"}), 500
+        return jsonify({"tweets": tweets}), 200
 
 @main.route('/analyze_hashtag_tweets', methods=['POST'])
 def analyze_hashtag():
@@ -47,7 +47,7 @@ def analyze_hashtag():
         return jsonify({"error": "No hashtag provided"}), 400
     
     tweets = analyze_hashtag_tweets(hashtag, tweet_count)
-    if tweets is not None:
-        return jsonify({"tweets": tweets}), 200
+    if "error" in tweets:
+        return jsonify({"error": tweets["error"]}), 500
     else:
-        return jsonify({"error": "Failed to analyze hashtag tweets"}), 500
+        return jsonify({"tweets": tweets}), 200

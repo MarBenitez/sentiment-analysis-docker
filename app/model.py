@@ -71,8 +71,9 @@ def analyze_user_tweets(username, count=10):
             analyzed_tweets.append({'text': tweet.text, 'sentiment': sentiment})
         return analyzed_tweets
     except tweepy.TweepyException as e:  # Cambia TweepError por TweepyException
-        print(f"Error al obtener los tweets del usuario: {e}")
-        return None
+        error_message = f"Error al obtener los tweets del usuario: {e}"
+        print(error_message)
+        return {"error": error_message}
 
 # Función para obtener y analizar tweets relacionados con un hashtag específico
 def analyze_hashtag_tweets(hashtag, count=10):
@@ -84,5 +85,6 @@ def analyze_hashtag_tweets(hashtag, count=10):
             analyzed_tweets.append({'text': tweet.text, 'sentiment': sentiment})
         return analyzed_tweets
     except tweepy.TweepyException as e:  # Cambia TweepError por TweepyException
-        print(f"Error al obtener los tweets del hashtag: {e}")
-        return None
+        error_message = f"Error al obtener los tweets del hashtag: {e}"
+        print(error_message)
+        return {"error": error_message}
