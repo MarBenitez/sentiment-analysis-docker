@@ -31,12 +31,16 @@ def analyze_user():
     tweet_count = int(data.get("count", 10))
     if not username:
         return jsonify({"error": "No username provided"}), 400
-    
-    tweets = analyze_user_tweets(username, tweet_count)
-    if "error" in tweets:
-        return jsonify({"error": tweets["error"]}), 500
-    else:
-        return jsonify({"tweets": tweets}), 200
+
+    try:
+        tweets = analyze_user_tweets(username, tweet_count)
+        if tweets is not None:
+            return jsonify({"tweets": tweets}), 200
+        else:
+            return jsonify({"error": "Failed to analyze user tweets"}), 500
+    except Exception as e:
+        # Mostrar un mensaje de error más amigable al usuario
+        return jsonify({"error": "There was an issue accessing Twitter data. Please try again later."}), 500
 
 @main.route('/analyze_hashtag_tweets', methods=['POST'])
 def analyze_hashtag():
@@ -45,9 +49,13 @@ def analyze_hashtag():
     tweet_count = int(data.get("count", 10))
     if not hashtag:
         return jsonify({"error": "No hashtag provided"}), 400
-    
-    tweets = analyze_hashtag_tweets(hashtag, tweet_count)
-    if "error" in tweets:
-        return jsonify({"error": tweets["error"]}), 500
-    else:
-        return jsonify({"tweets": tweets}), 200
+
+    try:
+        tweets = analyze_hashtag_tweets(hashtag, tweet_count)
+        if tweets is not None:
+            return jsonify({"tweets": tweets}), 200
+        else:
+            return jsonify({"error": "Failed to analyze hashtag tweets"}), 500
+    except Exception as e:
+        # Mostrar un mensaje de error más amigable al usuario
+        return jsonify({"error": "There was an issue accessing Twitter data. Please try again later."}), 500
