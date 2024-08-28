@@ -5,3 +5,5 @@ torch>=1.11.0
 tokenizers==0.10.3
 gunicorn==20.1.0
 six==1.16.0
+python-dotenv==1.0.1
+tweepy==4.14.0

@@ -17,10 +17,17 @@
             <textarea id="text-input" rows="4" placeholder="Enter your text here..."></textarea>
             <button type="submit">Analyze</button>
         </form>
+
+        <h2>Analyze Sentiment from Twitter:</h2>
+        <form id="twitter-form">
+            <input type="text" id="twitter-input" placeholder="Enter Twitter username or hashtag...">
+            <button type="submit">Analyze Tweets</button>
+        </form>
+
         <div id="result"></div>
     </div>
     <footer>
-        <p>Powered by Hugging Face Transformers, Flask and Docker</p>
+        <p>Powered by Hugging Face Transformers, Flask, and Docker</p>
         <div class="icons">
             <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face Logo" class="hf-logo">
             <img src="https://www.vectorlogo.zone/logos/pocoo_flask/pocoo_flask-icon.svg" alt="Flask Logo" class="flask-logo">
@@ -28,7 +35,7 @@
         </div>
     </footer>
     
-    <!-- JavaScript code -->
+    <!-- JavaScript -->
     <script>
         document.getElementById('sentiment-form').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -56,8 +63,45 @@
             })
             .catch(error => console.error('Error:', error));
         });
+
+        document.getElementById('twitter-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var twitterInput = document.getElementById('twitter-input').value;
+            var route = '';
+            var data = {};
+
+            if (twitterInput.startsWith('@')) {
+                // Es un usuario
+                route = '/analyze_user_tweets';
+                data = { username: twitterInput.slice(1) };  // Remover el '@' para obtener el nombre de usuario
+            } else if (twitterInput.startsWith('#')) {
+                // Es un hashtag
+                route = '/analyze_hashtag_tweets';
+                data = { hashtag: twitterInput.slice(1) };  // Remover el '#' para obtener el hashtag
+            } else {
+                // No es un usuario ni un hashtag
+                alert('Please start with @ for a username or # for a hashtag.');
+                return;
+            }
+
+            fetch(route, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                var resultDiv = document.getElementById('result');
+                if (data.error) {
+                    resultDiv.innerHTML = `<p>Error: ${data.error}</p>`;
+                } else {
+                    resultDiv.innerHTML = `<p>Sentiment Analysis from Twitter: ${JSON.stringify(data.tweets)}</p>`;
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
     </script>
-    
-    <!-- JavaScript code ending -->
 </body>
 </html>
