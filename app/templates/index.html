@@ -67,12 +67,29 @@
         document.getElementById('twitter-form').addEventListener('submit', function(event) {
             event.preventDefault();
             var twitterInput = document.getElementById('twitter-input').value;
-            fetch('/analyze-twitter', {
+            var route = '';
+            var data = {};
+
+            if (twitterInput.startsWith('@')) {
+                // Es un usuario
+                route = '/analyze_user_tweets';
+                data = { username: twitterInput.slice(1) };  // Remover el '@' para obtener el nombre de usuario
+            } else if (twitterInput.startsWith('#')) {
+                // Es un hashtag
+                route = '/analyze_hashtag_tweets';
+                data = { hashtag: twitterInput.slice(1) };  // Remover el '#' para obtener el hashtag
+            } else {
+                // No es un usuario ni un hashtag
+                alert('Please start with @ for a username or # for a hashtag.');
+                return;
+            }
+
+            fetch(route, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({input: twitterInput})
+                body: JSON.stringify(data)
             })
             .then(response => response.json())
             .then(data => {
@@ -80,12 +97,7 @@
                 if (data.error) {
                     resultDiv.innerHTML = `<p>Error: ${data.error}</p>`;
                 } else {
-                    resultDiv.innerHTML = `<p>Sentiment Analysis from Twitter: ${data.label}</p>`;
-                    if (data.label.toLowerCase() === 'negative') {
-                        resultDiv.style.backgroundColor = '#ffcccc'; // Rojo claro para negativo
-                    } else if (data.label.toLowerCase() === 'positive') {
-                        resultDiv.style.backgroundColor = '#ccffcc'; // Verde claro para positivo
-                    }
+                    resultDiv.innerHTML = `<p>Sentiment Analysis from Twitter: ${JSON.stringify(data.tweets)}</p>`;
                 }
             })
             .catch(error => console.error('Error:', error));
